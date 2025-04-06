@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Property Card Component
+ * 
+ * This file contains the Property component which displays a property card with
+ * images, pricing details, property features, and agency information.
+ * The component is optimized for performance with image loading states,
+ * skeleton loading placeholders, and animations.
+ * 
+ * @version 2.1.0
+ * @since 1.0.0
+ */
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,71 +25,79 @@ import millify from 'millify';
 import DefaultImage from '../assets/images/house.jpg';
 import styles from '../styles/Property.module.css';
 
-
+/**
+ * Motion-enhanced Box component for animations
+ * Used to provide smooth hover and tap animations for the property card
+ */
 const MotionBox = motion(Box);
 
-const formatPrice = (price, currency = 'AED') => {
-  const formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return `${currency} ${formattedPrice}`;
-};
-
-
-const isNewProperty = (createdAt) => {
-  if (!createdAt) return false;
-  
-  const propertyDate = new Date(createdAt);
-  const now = new Date();
-  const differenceInTime = now.getTime() - propertyDate.getTime();
-  const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-  
-  return differenceInDays <= 7;
-};
-
-const Property = ({ 
-  property: { 
-    coverPhoto, 
-    price, 
-    rentFrequency, 
-    rooms, 
-    title, 
-    baths, 
-    area, 
-    agency, 
-    isVerified, 
-    externalID,
-    createdAt,
-    purpose,
-    furnishingStatus,
-    score = 0 // Default score for featured properties
-  },
-  isLoading = false // Loading state prop
-}) => {
+/**
+ * Formats a price value with thousand separators and a currency symbol
+ * 
+ * @param {number} price - The price value to format
+ * @param {string} currency - The currency code to prepend (default: 'AED')
+ * @returns {string} Formatted price string with currency symbol
+ * 
+ * @example
+ * // Returns "AED 1,250,000"
+ * formatP}) => {
+  /**
+   * State for tracking image loading status
+   * @type {[boolean, Function]} imageLoaded state and setter
+   */
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  /**
+   * State for tracking image loading errors
+   * @type {[boolean, Function]} imageError state and setter
+   */
   const [imageError, setImageError] = useState(false);
   
-  // Determine if property should show "Featured" badge based on score
+  /**
+   * Determine if property should show "Featured" badge based on score
+   * Properties with a score above 80 are considered featured
+   * @type {boolean}
+   */
   const isFeatured = score > 80;
-  // Check if property is new
+
+  /**
+   * Check if property is new (listed within the last 7 days)
+   * @type {boolean}
+   */
   const isNew = isNewProperty(createdAt);
   
-  // Reset image state when property changes
+  /**
+   * Reset image states when property changes
+   * This prevents showing the loaded state of the previous property
+   * when navigating between properties
+   */
   useEffect(() => {
     setImageLoaded(false);
     setImageError(false);
   }, [externalID]);
 
-  // Handle image load event
+  /**
+   * Handles successful image loading
+   * Sets imageLoaded to true to display the image and hide the loading placeholder
+   */
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
 
-  // Handle image error event
+  /**
+   * Handles image loading errors
+   * Sets imageError to true to display the default fallback image
+   */
   const handleImageError = () => {
     setImageError(true);
   };
 
+  /**
+   * Render skeleton loading state when data is being fetched
+   * Using Chakra UI's Skeleton components to provide a nice loading experience
+   * with motion animation for a smooth appearance
+   */
   if (isLoading) {
-    // Skeleton loading state
     return (
       <MotionBox 
         borderWidth="1px" 
@@ -104,23 +124,11 @@ const Property = ({
     );
   }
 
-  return (
-    <Link href={`/property/${externalID}`} passHref>
-      <MotionBox 
-        as="a"
-        borderWidth="1px" 
-        borderRadius="lg" 
-        overflow="hidden" 
-        boxShadow="sm"
-        bg="white"
-        w={{ base: "full", sm: "420px" }}
-        m={2}
-        role="group"
-        aria-label={`View details of ${title}`}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className={styles.propertyCard}
-      >
+  /**
+   * Render the property card with full content
+   * Features:
+   * - Animated hover and tap effects for better user interaction
+   * -
         {/* Image container */}
         <Box className={styles.imageContainer}>
           {!imageLoaded && !imageError && (
