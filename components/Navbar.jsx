@@ -1,24 +1,31 @@
-import { useState } from 'react';
-import Link from 'next/link';
-import { 
-  Box, 
-  Flex, 
-  Text, 
-  IconButton, 
-  Button, 
-  Stack, 
-  Collapse, 
-  useColorModeValue, 
-  useBreakpointValue, 
-  useDisclosure,
-  HStack
-} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { FaHome, FaSearch } from 'react-icons/fa';
-
-const Navbar = () => {
+/**
+ * @fileoverview Navigation Bar Component
+ * 
+ * This file contains the Navbar component which serves as the main navigation
+ * for the Tigma Real Estate application. It provides access to key sections
+ * of the site and adapts to different screen sizes with a responsive design.
+ * 
+ * Recent updates include:
+ * - Updated branding to Tigma Real Estate
+ *const Navbar = () => {
+  /**
+   * Controls the mobile menu open/closed state
+   * @type {Object} Disclosure state and handlers
+   * @property {boolean} isOpen Whether the mobile menu is currently open
+   * @property {Function} onToggle Function to toggle the mobile menu open/closed state
+   */
   const { isOpen, onToggle } = useDisclosure();
+  
+  /**
+   * Color values that adapt to light/dark mode
+   * @type {string} Text color that changes based on color mode
+   */
   const textColor = useColorModeValue('gray.600', 'white');
+  
+  /**
+   * Hover color for links that adapts to light/dark mode
+   * @type {string} Hover color that changes based on color mode
+   */
   const linkHoverColor = useColorModeValue('gray.800', 'white');
 
   return (
@@ -111,12 +118,25 @@ const Navbar = () => {
   );
 };
 
+/**
+ * NavLink Component
+ * 
+ * A reusable navigation link component used within the Navbar.
+ * Provides consistent styling for all navigation links with hover effects.
+ * Adapts styling based on whether it's used in mobile or desktop view.
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.href - URL the link should navigate to
+ * @param {React.ReactNode} props.children - Link text or content
+ * @param {boolean} [props.mobile] - Whether this link is rendered in the mobile menu
+ * @returns {React.ReactElement} A styled navigation link
+ */
 const NavLink = ({ href, children, mobile }) => (
   <Link href={href} passHref>
     <Text
       as="a"
       px={2}
-      py={mobile ? 2 : 1}
+      py={mobile ? 2 : 1} // More padding on mobile for better touch targets
       rounded={'md'}
       color="gray.600"
       fontWeight="medium"
@@ -126,6 +146,8 @@ const NavLink = ({ href, children, mobile }) => (
         bg: 'gray.50',
       }}
       display="block"
+      // Improved accessibility
+      role="menuitem"
     >
       {children}
     </Text>
