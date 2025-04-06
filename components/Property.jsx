@@ -25,78 +25,51 @@ import millify from 'millify';
 import DefaultImage from '../assets/images/house.jpg';
 import styles from '../styles/Property.module.css';
 
-/**
- * Motion-enhanced Box component for animations
- * Used to provide smooth hover and tap animations for the property card
- */
+// Motion-enhanced Box component for animations
 const MotionBox = motion(Box);
 
-/**
- * Formats a price value with thousand separators and a currency symbol
- * 
- * @param {number} price - The price value to format
- * @param {string} currency - The currency code to prepend (default: 'AED')
- * @returns {string} Formatted price string with currency symbol
- * 
- * @example
- * // Returns "AED 1,250,000"
- * formatP}) => {
-  /**
-   * State for tracking image loading status
-   * @type {[boolean, Function]} imageLoaded state and setter
-   */
+const Property = ({ 
+  property: {
+    coverPhoto,
+    price,
+    rentFrequency,
+    rooms,
+    title,
+    baths,
+    area,
+    agency,
+    isVerified,
+    externalID,
+    score,
+    createdAt,
+    furnishingStatus,
+    purpose
+  },
+  isLoading = false
+}) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-
-  /**
-   * State for tracking image loading errors
-   * @type {[boolean, Function]} imageError state and setter
-   */
   const [imageError, setImageError] = useState(false);
   
-  /**
-   * Determine if property should show "Featured" badge based on score
-   * Properties with a score above 80 are considered featured
-   * @type {boolean}
-   */
   const isFeatured = score > 80;
+  const isNew = (new Date() - new Date(createdAt)) / (1000 * 60 * 60 * 24) <= 7;
 
-  /**
-   * Check if property is new (listed within the last 7 days)
-   * @type {boolean}
-   */
-  const isNew = isNewProperty(createdAt);
-  
-  /**
-   * Reset image states when property changes
-   * This prevents showing the loaded state of the previous property
-   * when navigating between properties
-   */
   useEffect(() => {
     setImageLoaded(false);
     setImageError(false);
   }, [externalID]);
 
-  /**
-   * Handles successful image loading
-   * Sets imageLoaded to true to display the image and hide the loading placeholder
-   */
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
 
-  /**
-   * Handles image loading errors
-   * Sets imageError to true to display the default fallback image
-   */
   const handleImageError = () => {
     setImageError(true);
   };
 
-  /**
-   * Render skeleton loading state when data is being fetched
-   * Using Chakra UI's Skeleton components to provide a nice loading experience
-   * with motion animation for a smooth appearance
-   */
+  const formatPrice = (value) => {
+    return `AED ${millify(value)}`;
+  };
+
   if (isLoading) {
     return (
       <MotionBox 
@@ -124,11 +97,22 @@ const MotionBox = motion(Box);
     );
   }
 
-  /**
-   * Render the property card with full content
-   * Features:
-   * - Animated hover and tap effects for better user interaction
-   * -
+  return (
+    <Link href={`/property/${externalID}`} passHref>
+      <MotionBox
+        as="a"
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        boxShadow="sm"
+        bg="white"
+        w={{ base: "full", sm: "420px" }}
+        m={2}
+        cursor="pointer"
+        whileHover={{ y: -4, boxShadow: "md" }}
+        whileTap={{ y: 0 }}
+        transition={{ duration: 0.2 }}
+      >
         {/* Image container */}
         <Box className={styles.imageContainer}>
           {!imageLoaded && !imageError && (

@@ -1,3 +1,20 @@
+import {
+  Box,
+  Flex,
+  Text,
+  IconButton,
+  Button,
+  Stack,
+  Collapse,
+  useColorModeValue,
+  useBreakpointValue,
+  useDisclosure,
+  HStack,
+} from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { FaSearch } from 'react-icons/fa';
+import Link from 'next/link';
+
 /**
  * @fileoverview Navigation Bar Component
  * 
@@ -7,7 +24,8 @@
  * 
  * Recent updates include:
  * - Updated branding to Tigma Real Estate
- *const Navbar = () => {
+ */
+const Navbar = () => {
   /**
    * Controls the mobile menu open/closed state
    * @type {Object} Disclosure state and handlers
@@ -155,4 +173,3 @@ const NavLink = ({ href, children, mobile }) => (
 );
 
 export default Navbar;
-
