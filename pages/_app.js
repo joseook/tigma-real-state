@@ -1,10 +1,13 @@
 import Router from 'next/router';
 import Head from 'next/head';
 import NProgress from 'nprogress';
-import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript, createStandaloneToast } from '@chakra-ui/react';
 
 import Layout from '../components/Layout';
 import theme from '../styles/theme';
+
+// Create standalone toast for global usage
+const { ToastContainer } = createStandaloneToast({ theme });
 
 function MyApp({ Component, pageProps }) {
   NProgress.configure({ showSpinner: false });
@@ -33,9 +36,6 @@ function MyApp({ Component, pageProps }) {
         <meta property="og:image" content="/logo.png" />
 
         <link rel="icon" href="/favicon.ico" />
-
-        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css' integrity='sha512-42kB9yDlYiCEfx2xVwq0q7hT4uf26FUgSIZBK8uiaEnTdShXjwr8Ip1V4xGJMg3mHkUt9nNuTDxunHF0/EgxLQ==' crossOrigin='anonymous' referrerPolicy='no-referrer' />
-        
         <title>Tigma Real Estate</title>
       </Head>
 
@@ -75,15 +75,12 @@ function MyApp({ Component, pageProps }) {
         }
       `}</style>
       
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
-        <ColorModeProvider options={{
-          initialColorMode: 'light',
-          useSystemColorMode: false,
-        }}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ColorModeProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        <ToastContainer />
       </ChakraProvider>
     </>
   );

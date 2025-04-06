@@ -14,19 +14,18 @@
  * @updated 2025-04-06
  */
 
-import { extendTheme } from '@chakra-ui/react';
-import { createBreakpoints } from '@chakra-ui/theme-tools';
+import { extendTheme, defineStyleConfig } from '@chakra-ui/react';
 
 /**
  * Responsive Breakpoints
  */
-const breakpoints = createBreakpoints({
+const breakpoints = {
   sm: '30em',   // 480px - Mobile landscape
   md: '48em',   // 768px - Tablets
   lg: '62em',   // 992px - Desktops
   xl: '80em',   // 1280px - Large desktops
   '2xl': '96em', // 1536px - Extra large screens
-});
+};
 
 /**
  * Color Palette
@@ -94,49 +93,52 @@ const fontWeights = {
 /**
  * Component Style Overrides
  */
-const components = {
-  Button: {
-    baseStyle: {
-      fontWeight: 'semibold',
-      borderRadius: 'md',
-    },
-    variants: {
-      primary: {
-        bg: 'brand.primary',
-        color: 'white',
-        _hover: {
-          bg: 'brand.dark',
-          transform: 'translateY(-2px)',
-          boxShadow: 'md',
-        },
-        _active: {
-          bg: 'blue.800',
-          transform: 'translateY(0)',
-        },
+// Define component styles using the new Chakra UI v2 API
+const Button = defineStyleConfig({
+  baseStyle: {
+    fontWeight: 'semibold',
+    borderRadius: 'md',
+  },
+  variants: {
+    primary: {
+      bg: 'brand.primary',
+      color: 'white',
+      _hover: {
+        bg: 'brand.dark',
+        transform: 'translateY(-2px)',
+        boxShadow: 'md',
       },
-      secondary: {
-        bg: 'brand.accent',
-        color: 'white',
-        _hover: {
-          bg: 'blue.500',
-          transform: 'translateY(-2px)',
-          boxShadow: 'md',
-        },
-      },
-      outline: {
-        border: '2px solid',
-        borderColor: 'brand.primary',
-        color: 'brand.primary',
-        _hover: {
-          bg: 'brand.light',
-        },
+      _active: {
+        bg: 'blue.800',
+        transform: 'translateY(0)',
       },
     },
-    defaultProps: {
-      size: 'md',
-      variant: 'primary',
+    secondary: {
+      bg: 'brand.accent',
+      color: 'white',
+      _hover: {
+        bg: 'blue.500',
+        transform: 'translateY(-2px)',
+        boxShadow: 'md',
+      },
+    },
+    outline: {
+      border: '2px solid',
+      borderColor: 'brand.primary',
+      color: 'brand.primary',
+      _hover: {
+        bg: 'brand.light',
+      },
     },
   },
+  defaultProps: {
+    size: 'md',
+    variant: 'primary',
+  },
+});
+
+const components = {
+  Button,
   Heading: {
     baseStyle: {
       fontFamily: 'heading',
@@ -247,6 +249,7 @@ const styles = {
 /**
  * Export the complete theme configuration
  */
+// Create theme with components properly configured for Chakra UI v2
 const theme = extendTheme({
   colors,
   fonts,
@@ -256,6 +259,10 @@ const theme = extendTheme({
   components,
   space,
   styles,
+  config: {
+    initialColorMode: 'light',
+    useSystemColorMode: false,
+  }
 });
 
 export default theme;

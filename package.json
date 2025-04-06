@@ -9,24 +9,35 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.2.4",
-    "@chakra-ui/react": "^1.6.8",
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
-    "axios": "^0.23.0",
-    "framer-motion": "^4.1.17",
+    "@chakra-ui/avatar": "^2.3.0",
+    "@chakra-ui/icons": "^2.1.0",
+    "@chakra-ui/modal": "2.3",
+    "@chakra-ui/next-js": "2.2.0",
+    "@chakra-ui/number-input": "2.1",
+    "@chakra-ui/react": "^2.8.2",
+    "@chakra-ui/slider": "2.1",
+    "@chakra-ui/system": "2.6",
+    "@chakra-ui/theme": "3.3",
+    "@chakra-ui/theme-tools": "2.1",
+    "@chakra-ui/toast": "7.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "axios": "^1.8.4",
+    "framer-motion": "^10.16.4",
+    "isomorphic-dompurify": "^2.23.0",
     "millify": "^4.0.0",
-    "next": "11.1.2",
+    "next": "15.2.4",
     "nprogress": "^0.2.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-horizontal-scrolling-menu": "^2.3.2",
     "react-icons": "^4.2.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.27.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2"
+    "eslint": "9.24.0",
+    "eslint-config-next": "15.2.4"
   },
   "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"
 }

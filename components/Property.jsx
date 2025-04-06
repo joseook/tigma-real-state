@@ -13,9 +13,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Box, Flex, Text, Badge, HStack, VStack } from '@chakra-ui/react';
-import { Skeleton, SkeletonText } from '@chakra-ui/react';
-import { Avatar } from '@chakra-ui/avatar';
+import { Box, Flex, Text, Badge, HStack, VStack, Skeleton, SkeletonText, Avatar } from '@chakra-ui/react';
 import { FaBed, FaBath } from 'react-icons/fa';
 import { BsGridFill, BsStarFill } from 'react-icons/bs';
 import { GoVerified } from 'react-icons/go';
@@ -124,8 +122,8 @@ const Property = ({
           <Image 
             src={imageError || !coverPhoto ? DefaultImage : coverPhoto.url} 
             alt={title || 'Property Image'}
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: 'cover' }}
             loading="lazy"
             onLoad={handleImageLoad}
             onError={handleImageError}

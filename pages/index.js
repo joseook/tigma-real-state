@@ -26,8 +26,8 @@ export const Banner = ({ purpose, title1, title2, desc1, desc2, buttonText, link
         <Image 
           src={imageUrl} 
           alt={title1}
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover' }}
           priority
         />
       </Box>
@@ -134,9 +134,31 @@ const Home = ({ propertiesForSale, propertiesForRent }) => (
 );
 
 export async function getStaticProps() {
-  const propertyForSale = await fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-sale&hitsPerPage=6`);
-  const propertyForRent = await fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-rent&hitsPerPage=6`);
+  // Define the essential fields to reduce data size
+  const requiredFields = [
+    'externalID',
+    'title',
+    'coverPhoto',
+    'price',
+    'rentFrequency',
+    'rooms',
+    'baths',
+    'area',
+    'agency',
+    'isVerified',
+    'score',
+    'createdAt',
+    'furnishingStatus',
+    'purpose'
+  ].join(',');
 
+  // Fetch only 3 properties per category with selected fields
+  const propertyForSale = await fetchApi(
+    `${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-sale&hitsPerPage=3&fields=${requiredFields}`
+  );
+  const propertyForRent = await fetchApi(
+    `${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-rent&hitsPerPage=3&fields=${requiredFields}`
+  );
   return {
     props: {
       propertiesForSale: propertyForSale?.hits,

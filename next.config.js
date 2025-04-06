@@ -1,6 +1,16 @@
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
-  images:{
-    domains:['bayut-production.s3.eu-central-1.amazonaws.com']
-},
-}
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'bayut-production.s3.eu-central-1.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+};
+
+module.exports = nextConfig;
