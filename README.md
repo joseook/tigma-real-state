@@ -58,7 +58,7 @@ A modern real estate platform built with Next.js and Chakra UI that allows users
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/tigma-real-estate.git
+   git clone https://github.com/joseook/tigma-real-estate.git
    cd tigma-real-estate
    ```
 
